@@ -20,7 +20,6 @@ class polylinkedlist{
 		polylinkedlist();
 		~polylinkedlist();
 		void insert(int coefficent, int exponent);
-		void readPoly();
 		void writePoly();
 		polylinkedlist addPoly(polylinkedlist poly);
 		polylinkedlist mulPoly(polylinkedlist poly);

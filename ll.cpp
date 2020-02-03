@@ -22,12 +22,13 @@ void polylinkedlist::insert(int coefficent,int exponent){
 	}
 }
 
-void polylinkedlist::readPoly(){
-	//stub
-}
-
 void polylinkedlist::writePoly(){
-	Node* b = 
+	Node* checker = this->first;
+	while(checker != NULL){
+		cout<< checker->coef << " " <<checker->expo;
+		checker = checker->next;
+	}
+	cout<<endl;
 }
 
 polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
@@ -83,7 +84,7 @@ int main(int argc, char* argv[]){
 		}
 		else if(num== "**"){
 			one.squPoly();
-			one.readPoly();
+			one.writePoly();
 		}
 		else if(num == "*"){
 			numPolys++;
@@ -97,13 +98,12 @@ int main(int argc, char* argv[]){
 
 	if(mult>0){
 		polylinkedlist answer = one.mulPoly(two);
-		answer.readPoly();
+		answer.writePoly();
 	}
 	if(add>0){
 		polylinkedlist answer = one.addPoly(two);
-		answer.readPoly();
+		answer.writePoly();
 	}
-
 
 	return 0;
 }
