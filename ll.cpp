@@ -1,6 +1,7 @@
 //ll.cpp
 #include "ll.h"
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 polylinkedlist::polylinkedlist(){
@@ -26,21 +27,23 @@ void polylinkedlist::readPoly(){
 }
 
 void polylinkedlist::writePoly(){
-	//stub
+	Node* b = 
 }
 
 polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
 	//stub
+	cout<<"called Add"<<endl;
 	return poly;
 }
 polylinkedlist polylinkedlist::mulPoly(polylinkedlist poly){
 	//stub
+	cout<<"called multiply"<<endl;
 	return poly;
 }
 
 polylinkedlist polylinkedlist::squPoly(){
 	polylinkedlist duplicate;
-
+	cout<<"called squared"<<endl;
 	//stub
 	return duplicate;
 }
@@ -53,51 +56,40 @@ int main(int argc, char* argv[]){
 	polylinkedlist one;
 	polylinkedlist two;
 	string coefTemp = "";
-	string expTemp = "";
 	int counter = 1;
 	int numPolys = 1;
 	int mult= 0;
 	int add = 0;
-	for(int i = 1; i< argc; i++){//length needs to be corrected
-		if(argv[1][i] == " "){
-			if(argv[1][i-1]=="*" || argv[1][i] =="+"){
-				//does nothing just skips iteration
-			}
-			else if(counter%2==1){
+	string num;
+	stringstream ss;
+	ss<< argv[1];
+	while(getline(ss,num,' ')){
+		if(num != "**" && num != "*" && num!= "+" ){
+			if(counter%2==1){
+				coefTemp=num;
 				counter++;
 			}
 			else if(numPolys==1){
-				one.insert(stoi(coefTemp),stoi(expTemp));
+				one.insert(stoi(coefTemp),stoi(num));
 				coefTemp="";
-				expTemp="";
 				counter++;
 			}
 			else{
-				two.insert(stoi(coefTemp),stoi(expTemp)); 
+				two.insert(stoi(coefTemp),stoi(num)); 
 				coefTemp="";
-				expTemp="";
 				counter++;
 			}
 
 		}
-		else if(argv[1][i] != "*" && argv[1][i] !="+"){
-			if(counter%2==1){
-				coefTemp= coefTemp + argv[1][i];
-			}
-			else{
-				expTemp = expTemp + argv[1][i];
-			}
-		}
-		else if(argv[1][i]=="*" && argv[1][i+1]=="*"){
+		else if(num== "**"){
 			one.squPoly();
 			one.readPoly();
-			return 0;
 		}
-		else if(argv[1][i]=="*"){
+		else if(num == "*"){
 			numPolys++;
 			mult++;
 		}
-		else if(argv[1][i]=="+"){
+		else if(num== "+"){
 			numPolys++;
 			add++;
 		}
