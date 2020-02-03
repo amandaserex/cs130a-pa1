@@ -29,16 +29,20 @@ void polylinkedlist::writePoly(){
 	//stub
 }
 
-void polylinkedlist::mulPoly(polylinkedlist poly){
+polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
 	//stub
+	return poly;
+}
+polylinkedlist polylinkedlist::mulPoly(polylinkedlist poly){
+	//stub
+	return poly;
 }
 
-void polylinkedlist::squPoly(){
-	Node* temp=first;
-	while(temp!=NULL){
-		temp->expo=temp->expo*2;
-		temp = temp->next;
-	}
+polylinkedlist polylinkedlist::squPoly(){
+	polylinkedlist duplicate;
+
+	//stub
+	return duplicate;
 }
 
 
@@ -48,47 +52,66 @@ int main(int argc, char* argv[]){
 	}
 	polylinkedlist one;
 	polylinkedlist two;
-	string temp = "";
+	string coefTemp = "";
+	string expTemp = "";
 	int counter = 1;
-	int numPolys =0;
-	int mult = 0;
-	string coef;
-	cout<<argv[1][1]<<endl;
-	/*
-	for(int i = 1; i< argc; i++){
-		if(argv[i] != "**" && argv[i] != "*" && numPolys ==0){
-			if(counter%2==1){
-				temp= argv[i];
+	int numPolys = 1;
+	int mult= 0;
+	int add = 0;
+	for(int i = 1; i< argc; i++){//length needs to be corrected
+		if(argv[1][i] == " "){
+			if(argv[1][i-1]=="*" || argv[1][i] =="+"){
+				//does nothing just skips iteration
+			}
+			else if(counter%2==1){
+				counter++;
+			}
+			else if(numPolys==1){
+				one.insert(stoi(coefTemp),stoi(expTemp));
+				coefTemp="";
+				expTemp="";
 				counter++;
 			}
 			else{
-				cout<<temp<<endl;
-				one.insert(stoi(temp),stoi(argv[i]));
-				temp="";
-			}
-		}
-		else if(numPolys==1 && argv[i] != "**" && numPolys == 1){
-			if(counter%2==1){
-				temp = argv[i];
+				two.insert(stoi(coefTemp),stoi(expTemp)); 
+				coefTemp="";
+				expTemp="";
 				counter++;
 			}
+
+		}
+		else if(argv[1][i] != "*" && argv[1][i] !="+"){
+			if(counter%2==1){
+				coefTemp= coefTemp + argv[1][i];
+			}
 			else{
-				two.insert(stoi(temp),stoi(argv[i]));
-				temp="";
+				expTemp = expTemp + argv[1][i];
 			}
 		}
-		else if(argv[i]=="**"){
+		else if(argv[1][i]=="*" && argv[1][i+1]=="*"){
 			one.squPoly();
 			one.readPoly();
 			return 0;
 		}
-		else if(argv[i]=="*"){
-			counter++;
+		else if(argv[1][i]=="*"){
+			numPolys++;
 			mult++;
+		}
+		else if(argv[1][i]=="+"){
+			numPolys++;
+			add++;
 		}
 	}
 
-*/
+	if(mult>0){
+		polylinkedlist answer = one.mulPoly(two);
+		answer.readPoly();
+	}
+	if(add>0){
+		polylinkedlist answer = one.addPoly(two);
+		answer.readPoly();
+	}
+
 
 	return 0;
 }

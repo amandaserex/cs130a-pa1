@@ -22,8 +22,9 @@ class polylinkedlist{
 		void insert(int coefficent, int exponent);
 		void readPoly();
 		void writePoly();
-		void mulPoly(polylinkedlist poly);
-		void squPoly();//squares an entire polynomial
+		polylinkedlist addPoly(polylinkedlist poly);
+		polylinkedlist mulPoly(polylinkedlist poly);
+		polylinkedlist squPoly();//squares an entire polynomial
 	private:
 		Node* first;
 		Node* last;
