@@ -67,8 +67,28 @@ polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
 }
 
 polylinkedlist polylinkedlist::mulPoly(polylinkedlist poly){
-	//stub
-	return poly;
+	Node* pointer = poly.first;
+	Node* og = this->first;
+	polylinkedlist realanswer;
+	polylinkedlist tempanswer;
+	while(pointer !=NULL){
+		while(og != NULL){
+			if(pointer->expo == poly.first->expo){
+				realanswer.insert(pointer->coef * og->coef, pointer->expo + og->expo);
+				og = og->next;
+			}
+			else{
+			tempanswer.insert(pointer->coef * og->coef, pointer->expo + og->expo);
+			og = og->next;
+			}
+		}
+		og = this->first;
+		realanswer.addPoly(tempanswer);
+		pointer = pointer->next;
+		//need to delete tempanswer
+		//tempanswer.first=NULL;
+	}	
+	return realanswer;
 }
 
 polylinkedlist polylinkedlist::squPoly(){
