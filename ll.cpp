@@ -35,42 +35,34 @@ polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
 	Node* one = this->first;
 	Node* two = poly.first;
 	polylinkedlist answer;
-	while(one != NULL){
+	while(one != NULL && two!=NULL){
 		if(two->expo > one->expo){
 			answer.insert(one->coef, one->expo);
 			one = one->next;
-			two = poly.first;
 		}
 		else if(two->expo == one->expo){
 			answer.insert(one->coef + two->coef, one->expo);
 			one = one->next;
+			two = two->next;
 		}
 		else if(two->expo < one->expo){
-			two=two->next;
-			if(two==NULL){
-				answer.insert(one->coef, one->expo);
-			}
+			answer.insert(two->coef, two->expo);
+			two = two -> next;
 		}
 	}
-	one = this->first;
-	two = poly.first;
+	if(one==NULL){
+		while(two != NULL){
+			answer.insert(two->coef, two->expo);
+			two=two->next;
+		}
+	}
+	if(two==NULL){
+		while(one != NULL){
+			answer.insert(one->coef, one->expo);
+			one=one->next;
+		}
+	}
 
-	while(two != NULL){
-		if(one==NULL){
-			answer.insert(two->coef, two->expo);
-			two = two->next;
-			}
-		else if(two->expo <  one->expo){
-			answer.insert(two->coef, two->expo);
-			two = two ->next;
-		}
-		else if(two->expo == one->expo){
-			two = two->next;
-		}
-		else{
-			one = one->next;
-		}
-	}	
 	return answer;
 }
 
