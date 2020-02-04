@@ -9,7 +9,15 @@ polylinkedlist::polylinkedlist(){
 }
 		
 polylinkedlist::~polylinkedlist(){
-	//stub	
+	/*if(first==NULL){
+		return;
+	}
+	Node* pointer = this -> first;
+	while(first->next != NULL){
+		first = first ->next;
+		delete pointer;
+		pointer = first;
+		}*/
 }
 
 void polylinkedlist::insert(int coefficent,int exponent){
@@ -86,7 +94,7 @@ polylinkedlist polylinkedlist::mulPoly(polylinkedlist poly){
 		realanswer.addPoly(tempanswer);
 		pointer = pointer->next;
 		//need to delete tempanswer
-		//tempanswer.first=NULL;
+		tempanswer.~polylinkedlist();
 	}	
 	return realanswer;
 }
