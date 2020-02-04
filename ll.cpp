@@ -37,7 +37,7 @@ polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
 	polylinkedlist answer;
 	while(one != NULL){
 		if(two->expo > one->expo){
-			answer.insert(one->coef, one->expo);//insert
+			answer.insert(one->coef, one->expo);
 			one = one->next;
 			two = poly.first;
 		}
@@ -76,15 +76,17 @@ polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
 
 polylinkedlist polylinkedlist::mulPoly(polylinkedlist poly){
 	//stub
-	cout<<"called multiply"<<endl;
 	return poly;
 }
 
 polylinkedlist polylinkedlist::squPoly(){
 	polylinkedlist duplicate;
-	cout<<"called squared"<<endl;
-	//stub
-	return duplicate;
+	Node* og = this->first;
+	while(og != NULL){
+		duplicate.insert(og->coef, og->expo);
+		og=og->next;
+	}
+	return this->mulPoly(duplicate);;
 }
 
 
