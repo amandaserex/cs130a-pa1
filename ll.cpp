@@ -25,17 +25,55 @@ void polylinkedlist::insert(int coefficent,int exponent){
 void polylinkedlist::writePoly(){
 	Node* checker = this->first;
 	while(checker != NULL){
-		cout<< checker->coef << " " <<checker->expo;
+		cout<< checker->coef << " " <<checker->expo<<" ";
 		checker = checker->next;
 	}
 	cout<<endl;
 }
 
 polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
-	//stub
-	cout<<"called Add"<<endl;
-	return poly;
+	Node* one = this->first;
+	Node* two = poly.first;
+	polylinkedlist answer;
+	while(one != NULL){
+		if(two->expo > one->expo){
+			answer.insert(one->coef, one->expo);//insert
+			one = one->next;
+			two = poly.first;
+		}
+		else if(two->expo == one->expo){
+			answer.insert(one->coef + two->coef, one->expo);
+			one = one->next;
+		}
+		else if(two->expo < one->expo){
+			two=two->next;
+			if(two==NULL){
+				answer.insert(one->coef, one->expo);
+			}
+		}
+	}
+	one = this->first;
+	two = poly.first;
+
+	while(two != NULL){
+		if(one==NULL){
+			answer.insert(two->coef, two->expo);
+			two = two->next;
+			}
+		else if(two->expo <  one->expo){
+			answer.insert(two->coef, two->expo);
+			two = two ->next;
+		}
+		else if(two->expo == one->expo){
+			two = two->next;
+		}
+		else{
+			one = one->next;
+		}
+	}	
+	return answer;
 }
+
 polylinkedlist polylinkedlist::mulPoly(polylinkedlist poly){
 	//stub
 	cout<<"called multiply"<<endl;
