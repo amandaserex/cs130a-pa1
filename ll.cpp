@@ -9,24 +9,51 @@ polylinkedlist::polylinkedlist(){
 }
 		
 polylinkedlist::~polylinkedlist(){
-	/*if(first==NULL){
-		return;
-	}
-	Node* pointer = this -> first;
-	while(first->next != NULL){
-		first = first ->next;
-		delete pointer;
-		pointer = first;
-		}*/
+	first=last=NULL;
+	/*Node* n=first;
+	Node* p;
+	while(n!=NULL){
+		p=n->next;
+		delete n;
+		n=p;
+	}*/
 }
 
 void polylinkedlist::insert(int coefficent,int exponent){
+	while(coefficent>999999){
+		coefficent=coefficent%1000000;
+	}
+	while(exponent>9999){
+		exponent=exponent%10000;
+	}
 	if(first==NULL){
 		first=last= new Node(coefficent, exponent);
 	}
-	else{
+	else if(exponent>last->expo){
 		last->next=new Node(coefficent,exponent);
 		last=last->next;
+	}
+	else{
+		Node* where = first;
+		int node=0;
+		while(exponent> where->expo){
+			where=where->next;
+			node++;
+		}
+		if(node==0){
+			Node* newguy = new Node(coefficent,exponent);
+			newguy->next= first;
+			first=newguy;
+		}
+		else{
+			where = first;
+			for(int i =0; i<node; i++){
+				where=where->next;
+			}
+			Node* tempNext = where->next;
+			where->next= new Node(coefficent,exponent);
+			where->next->next=tempNext;
+		}
 	}
 }
 
@@ -70,7 +97,6 @@ polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
 			one=one->next;
 		}
 	}
-
 	return answer;
 }
 
@@ -81,17 +107,11 @@ polylinkedlist polylinkedlist::mulPoly(polylinkedlist poly){
 	polylinkedlist tempanswer;
 	while(pointer !=NULL){
 		while(og != NULL){
-			if(pointer->expo == poly.first->expo){
-				realanswer.insert(pointer->coef * og->coef, pointer->expo + og->expo);
-				og = og->next;
-			}
-			else{
 			tempanswer.insert(pointer->coef * og->coef, pointer->expo + og->expo);
 			og = og->next;
-			}
 		}
 		og = this->first;
-		realanswer.addPoly(tempanswer);
+		realanswer = realanswer.addPoly(tempanswer);
 		pointer = pointer->next;
 		//need to delete tempanswer
 		tempanswer.~polylinkedlist();
@@ -143,8 +163,8 @@ int main(int argc, char* argv[]){
 
 		}
 		else if(num== "**"){
-			one.squPoly();
-			one.writePoly();
+			polylinkedlist answer = one.squPoly();
+			answer.writePoly();
 		}
 		else if(num == "*"){
 			numPolys++;

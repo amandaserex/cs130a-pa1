@@ -7,13 +7,13 @@ using namespace std;
 
 class polyArray{
 	public:
-		void insert(int num);
+		void insert(int coef, int expo);
 		polyArray();
-		~polyArray();
-		void readPoly();
+		void cleanUp();
 		void writePoly();
-		void mulPoly(polyArray poly);
-		void squPoly();	
+		polyArray addPoly(polyArray poly);
+		polyArray mulPoly(polyArray poly);
+		polyArray squPoly();	
 	private:
 		int data[10000];//max capacity is 9999
 };
