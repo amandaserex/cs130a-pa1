@@ -19,11 +19,12 @@ class polylinkedlist{
 	public:
 		polylinkedlist();
 		~polylinkedlist();
+		void clearll();
 		void insert(int coefficent, int exponent);
 		void writePoly();
-		polylinkedlist addPoly(polylinkedlist poly);
-		polylinkedlist mulPoly(polylinkedlist poly);
-		polylinkedlist squPoly();//squares an entire polynomial
+		void addPoly(polylinkedlist& poly);
+		void mulPoly(polylinkedlist& poly);
+		void squPoly();//squares an entire polynomial
 	private:
 		Node* first;
 		Node* last;

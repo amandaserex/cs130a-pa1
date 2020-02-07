@@ -9,14 +9,28 @@ polylinkedlist::polylinkedlist(){
 }
 		
 polylinkedlist::~polylinkedlist(){
-	first=last=NULL;
-	/*Node* n=first;
+	Node* n=first;
 	Node* p;
 	while(n!=NULL){
 		p=n->next;
 		delete n;
 		n=p;
-	}*/
+	}
+}
+
+void polylinkedlist::clearll(){
+	if(first=last=NULL){
+		return;
+	}
+	Node* n=first;
+	Node* p;
+	while(n!=NULL){
+		p=n->next;
+		delete n;
+		n=p;
+	}
+	first=last=NULL;
+	
 }
 
 void polylinkedlist::insert(int coefficent,int exponent){
@@ -29,14 +43,14 @@ void polylinkedlist::insert(int coefficent,int exponent){
 	if(first==NULL){
 		first=last= new Node(coefficent, exponent);
 	}
-	else if(exponent>last->expo){
+	else if(last && exponent>last->expo){
 		last->next=new Node(coefficent,exponent);
 		last=last->next;
 	}
 	else{
 		Node* where = first;
 		int node=0;
-		while(exponent> where->expo){
+		while(where && exponent> where->expo){
 			where=where->next;
 			node++;
 		}
@@ -66,7 +80,7 @@ void polylinkedlist::writePoly(){
 	cout<<endl;
 }
 
-polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
+void polylinkedlist::addPoly(polylinkedlist& poly){
 	Node* one = this->first;
 	Node* two = poly.first;
 	polylinkedlist answer;
@@ -97,36 +111,48 @@ polylinkedlist polylinkedlist::addPoly(polylinkedlist poly){
 			one=one->next;
 		}
 	}
-	return answer;
+	this->clearll();
+	Node* copier= answer.first;
+	while(copier!= NULL){
+		this->insert(copier->coef, copier->expo);
+		copier = copier->next;
+	}
+	return;
 }
 
-polylinkedlist polylinkedlist::mulPoly(polylinkedlist poly){
+void polylinkedlist::mulPoly(polylinkedlist& poly){
 	Node* pointer = poly.first;
 	Node* og = this->first;
 	polylinkedlist realanswer;
 	polylinkedlist tempanswer;
-	while(pointer !=NULL){
+	while(pointer != NULL){
 		while(og != NULL){
 			tempanswer.insert(pointer->coef * og->coef, pointer->expo + og->expo);
 			og = og->next;
 		}
 		og = this->first;
-		realanswer = realanswer.addPoly(tempanswer);
+		realanswer.addPoly(tempanswer);
 		pointer = pointer->next;
-		//need to delete tempanswer
-		tempanswer.~polylinkedlist();
+		tempanswer.clearll();
+	}
+	this->clearll();
+	Node* copier= realanswer.first;
+	while(copier!= NULL){
+		this->insert(copier->coef, copier->expo);
+		copier = copier->next;
 	}	
-	return realanswer;
+	return;
 }
 
-polylinkedlist polylinkedlist::squPoly(){
+void polylinkedlist::squPoly(){
 	polylinkedlist duplicate;
 	Node* og = this->first;
 	while(og != NULL){
 		duplicate.insert(og->coef, og->expo);
 		og=og->next;
 	}
-	return this->mulPoly(duplicate);;
+	this->mulPoly(duplicate);
+	return;
 }
 
 
@@ -163,26 +189,30 @@ int main(int argc, char* argv[]){
 
 		}
 		else if(num== "**"){
-			polylinkedlist answer = one.squPoly();
-			answer.writePoly();
+			one.squPoly();
+			one.writePoly();
 		}
 		else if(num == "*"){
 			numPolys++;
 			mult++;
 		}
+		
 		else if(num== "+"){
 			numPolys++;
 			add++;
 		}
+	 
 	}
+	
 
 	if(mult>0){
-		polylinkedlist answer = one.mulPoly(two);
-		answer.writePoly();
+		one.mulPoly(two);
+		one.writePoly();
 	}
+	
 	if(add>0){
-		polylinkedlist answer = one.addPoly(two);
-		answer.writePoly();
+		one.addPoly(two);
+		one.writePoly();
 	}
 
 	return 0;
